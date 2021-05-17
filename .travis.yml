@@ -1,0 +1,20 @@
+# Tell  travis that all commands should be ran with super user permission
+sudo: required
+
+language: generic 
+
+# Tell travis which additional software it needs for the project
+services:
+  - docker
+
+# Series of commands that are executed before our test are ran
+before_install:
+  #Don't forget to tag the image built so we can run it later with the same name tag
+  - docker build -t valentingourmet/docker-react -f Dockerfile.dev .
+
+#All the commands needed to run our test suite 
+# If any commands returns a status code != 0, it means the build failed
+script:
+  # Note: npm run test doesn't exit automatically by default, so we need -e CI=true to make it so
+  - docker run -e CI=true valentingourmet/docker-react npm run test
+
