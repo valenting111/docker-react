@@ -16,5 +16,8 @@ RUN npm run build
 #No need to tag, automatically understands we're starting another phase 
 FROM nginx
 
+#Port mapping for AWS
+EXPOSE 80
+
 #Need to copy the build folder from previous phase
 COPY --from=builder /app/build /usr/share/nginx/html
